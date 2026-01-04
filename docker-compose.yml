@@ -1,0 +1,29 @@
+version: '3.8'
+
+services:
+  # MySQL数据库
+  mysql:
+    image: mysql:8.0
+    container_name: testai-mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: testai
+    ports:
+      - "3306:3306"
+    volumes:
+      - ./sql:/docker-entrypoint-initdb.d
+    networks:
+      - testai-network
+
+  # Redis缓存
+  redis:
+    image: redis:7-alpine
+    container_name: testai-redis
+    ports:
+      - "6379:6379"
+    networks:
+      - testai-network
+
+networks:
+  testai-network:
+    driver: bridge
