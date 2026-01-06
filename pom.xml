@@ -1,53 +1,87 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!--
+  1. 声明这是Maven的POM文件，使用XML 1.0版本，编码为UTF-8
+  2. xmlns：指定XML命名空间，确保Maven能正确解析标签
+  3. xsi:schemaLocation：指定XML Schema文件位置，校验POM文件格式是否合法
+-->
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+    <!-- 指定Maven POM模型的版本，固定为4.0.0（Maven 3.x版本通用） -->
     <modelVersion>4.0.0</modelVersion>
 
+    <!--
+      父工程依赖配置：继承Spring Boot的官方父工程
+      作用：自动管理Spring Boot相关依赖的版本，无需手动指定Spring Boot组件的version
+    -->
     <parent>
-        <groupId>org.springframework.boot</groupId>
-        <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.7.18</version>
-        <relativePath/>
+        <groupId>org.springframework.boot</groupId> <!-- 父工程的组织ID -->
+        <artifactId>spring-boot-starter-parent</artifactId> <!-- 父工程的模块ID -->
+        <version>2.7.18</version> <!-- Spring Boot的版本号 -->
+        <relativePath/> <!-- 不指定本地路径，从Maven仓库下载 -->
     </parent>
 
-    <groupId>com.testai</groupId>
-    <artifactId>test-ai-platform</artifactId>
-    <version>1.0.0</version>
-    <packaging>pom</packaging>
+    <!-- 当前父工程的核心标识（GAV坐标） -->
+    <groupId>com.testai</groupId> <!-- 组织ID：公司/项目唯一标识 -->
+    <artifactId>test-ai-platform</artifactId> <!-- 模块ID：项目名称 -->
+    <version>1.0.0</version> <!-- 项目版本号 -->
+    <packaging>pom</packaging> <!-- 打包类型：pom表示这是父工程（管理子模块），非可运行的jar/war -->
 
+    <!-- 项目名称（仅描述，无实际功能） -->
     <name>Test AI Platform</name>
+    <!-- 项目描述（仅说明，无实际功能） -->
     <description>基于Spring Cloud的智能测试管理平台</description>
 
+    <!--
+      子模块列表：声明当前父工程包含的所有子模块
+      作用：Maven编译/打包时，会自动处理这些子模块，子模块的pom.xml需指定当前父工程为parent
+    -->
     <modules>
-        <module>common</module>
-        <module>gateway-service</module>
-        <module>ai-agent-service</module>
-        <module>user-service</module>
-        <module>project-service</module>
-        <module>testcase-service</module>
-        <module>testexecution-service</module>
-        <module>report-service</module>
-        <module>system-service</module>
-        <module>notification-service</module>
-        <module>auth-service</module>
+        <module>common</module> <!-- 公共工具模块 -->
+        <module>gateway-service</module> <!-- 网关服务模块 -->
+        <module>ai-agent-service</module> <!-- AI代理服务模块 -->
+        <module>user-service</module> <!-- 用户服务模块（你之前操作的模块） -->
+        <module>project-service</module> <!-- 项目管理服务模块 -->
+        <module>testcase-service</module> <!-- 测试用例服务模块 -->
+        <module>testexecution-service</module> <!-- 测试执行服务模块 -->
+        <module>report-service</module> <!-- 报告服务模块 -->
+        <module>system-service</module> <!-- 系统管理服务模块 -->
+        <module>notification-service</module> <!-- 通知服务模块 -->
+        <module>auth-service</module> <!-- 认证授权服务模块 -->
     </modules>
 
+    <!--
+      全局属性配置：定义可复用的变量，后续依赖中可通过${变量名}引用
+      作用：统一管理版本号，修改时只需改这里，无需逐个依赖修改
+    -->
     <properties>
-        <java.version>1.8</java.version>
-        <spring-cloud.version>2021.0.8</spring-cloud.version>
-        <mybatis-plus.version>3.5.3.1</mybatis-plus.version>
-        <jjwt.version>0.11.5</jjwt.version>
+        <java.version>1.8</java.version> <!-- 指定项目使用的JDK版本为1.8（Java 8） -->
+        <spring-cloud.version>2021.0.8</spring-cloud.version> <!-- Spring Cloud版本号 -->
+        <mybatis-plus.version>3.5.3.1</mybatis-plus.version> <!-- MyBatis-Plus版本号 -->
+        <jjwt.version>0.11.5</jjwt.version> <!-- JJWT（JWT工具）版本号 -->
     </properties>
 
+    <!--
+      依赖版本管理：仅声明依赖的版本，不会自动引入依赖
+      作用：子模块引入这些依赖时，无需指定version，自动使用这里声明的版本，保证所有子模块版本一致
+    -->
     <dependencyManagement>
         <dependencies>
+            <!-- Spring Cloud依赖管理：引入Spring Cloud的版本管理POM -->
             <dependency>
                 <groupId>org.springframework.cloud</groupId>
                 <artifactId>spring-cloud-dependencies</artifactId>
-                <version>${spring-cloud.version}</version>
-                <type>pom</type>
-                <scope>import</scope>
+                <version>${spring-cloud.version}</version> <!-- 引用上面定义的Spring Cloud版本变量 -->
+                <type>pom</type> <!-- 类型为pom，表示是版本管理文件 -->
+                <scope>import</scope> <!-- 作用域：导入Spring Cloud的依赖版本规则 -->
+            </dependency>
+
+            <!-- 自定义common模块的版本管理：子模块引入common时无需写version -->
+            <dependency>
+                <groupId>com.testai</groupId>
+                <artifactId>common</artifactId>
+                <version>1.0.0</version> <!-- 和父工程版本一致 -->
             </dependency>
         </dependencies>
     </dependencyManagement>
