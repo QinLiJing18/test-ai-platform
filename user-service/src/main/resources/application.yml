@@ -3,9 +3,14 @@ server:
 
 spring:
   datasource:
-    url: jdbc:mysql://localhost:3306/test_ai_user?useUnicode=true&characterEncoding=utf8
+    # 【Claude修复Bug】添加MySQL 8.0必需的参数：
+    # - serverTimezone=Asia/Shanghai: 解决时区问题（MySQL 8.0必需）
+    # - useSSL=false: 避免SSL警告
+    # - allowPublicKeyRetrieval=true: 允许客户端从服务器检索公钥
+    url: jdbc:mysql://localhost:3306/test_ai_user?useUnicode=true&characterEncoding=utf8&serverTimezone=Asia/Shanghai&useSSL=false&allowPublicKeyRetrieval=true
     username: root
     password: qlj11280108
+    driver-class-name: com.mysql.cj.jdbc.Driver  # 【Claude修复Bug】明确指定MySQL 8驱动类
   redis:
     host: localhost
     port: 6379
