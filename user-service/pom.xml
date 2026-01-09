@@ -75,6 +75,13 @@
             <version>5.7.8</version> <!-- 适配Spring Boot 2.x，若用3.x则改版本为6.1.0+ -->
         </dependency>
 
+        <!-- 【Claude修复Bug】缺少Spring Security核心依赖（解决SecurityFilterChain报错） -->
+        <!-- 没有这个依赖会导致：找不到SecurityFilterChain类 -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-security</artifactId>
+        </dependency>
+
         <!-- 【Claude删除】以下JJWT依赖与上面43-62行重复，已删除重复部分 -->
         <!-- 原第78-95行的重复依赖已删除 -->
 

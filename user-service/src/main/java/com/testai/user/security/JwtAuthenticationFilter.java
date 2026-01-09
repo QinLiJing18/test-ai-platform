@@ -73,10 +73,12 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
                         // 步骤8: 设置请求详情（IP地址、SessionId等）
                         authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
-
+//ip地址和sessionid
                         // 步骤9: 将认证信息存入SecurityContext，后续可通过SecurityContextHolder获取当前用户
                         SecurityContextHolder.getContext().setAuthentication(authentication);
-
+//之后就可以这样 业务层/Controller层都能获取
+//                        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+//                        String currentUsername = auth.getName(); // 获取当前用户名
                         log.debug("【JWT认证】设置用户认证信息: {}", username);
                     }
                 } else {

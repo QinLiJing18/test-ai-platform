@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.*;
 @Slf4j
 @RestController
 @RequestMapping("/user")
+//通过@RequiredArgsConstructor自动注入UserService（业务逻辑）和JwtUtil（JWT 工具），无需手动写@Autowired。
 @RequiredArgsConstructor
 public class UserController {
 

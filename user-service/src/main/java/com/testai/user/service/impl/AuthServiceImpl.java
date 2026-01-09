@@ -17,7 +17,7 @@ import org.springframework.stereotype.Service;
  *
  * 职责说明：
  * 1. 处理用户登录认证：验证用户名密码，生成JWT token
- * 2. 处理用户退出：清理token缓存（当前简化实现）
+ * 2. 处理用户退出：清理token缓存（当前简化实现）git push origin master
  *
  * 依赖关系：
  * - UserService: 获取用户信息

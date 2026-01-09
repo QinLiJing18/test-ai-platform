@@ -1,4 +1,9 @@
 # Claude Bug修复总结
+前端(带token) → JwtFilter验证token
+→ SecurityConfig检查权限
+→ UserController.getUserInfo()
+→ 查询数据库
+→ 返回用户信息
 
 ## 修复时间
 2026-01-06 19:32
